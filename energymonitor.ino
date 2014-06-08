@@ -9,10 +9,13 @@
 #include <Ethernet.h>
 #include <PubSubClient.h>
 
-byte mac[6] = { 0x90, 0xA2, 0xDA, 0x44, 0x34, 0x28 };
+// MAC address from Ethernet shield sticker under board
+byte mac[6] = { 0x90, 0xA2, 0xDA, 0x0E, 0xA8, 0x54 };
+IPAddress ip(192, 168, 1, 200); // IP address, may need to change depending on network
+
 char macstr[18];
 
-const int chan1_pin = 2;
+const int chan1_pin = 1;
 //My meter flashes 1000 times per kWh
 const float w_per_pulse = 1;
 const unsigned long ms_per_hour = 3600000UL;
@@ -25,7 +28,7 @@ volatile byte chan1_pulse = 0;
 
 
 EthernetClient ethClient;
-PubSubClient client("192.168.1.3", 1883, callback, ethClient);
+PubSubClient client("192.168.1.110", 1883, callback, ethClient);
 
 void callback(char* topic, byte* payload, unsigned int length) {
 }
@@ -54,7 +57,6 @@ void setup() {
   delay(1000);
   snprintf(macstr, 18, "%02x:%02x:%02x:%02x:%02x:%02x",
     mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
-  Serial.print("DHCP (");
   Serial.print(macstr);
   Serial.print(")...");
   if (Ethernet.begin(mac) == 0) {
@@ -109,19 +111,5 @@ void loop() {
 
     snprintf(topic, 35, "house/power/meter/1/usage");
     client.publish(topic, "1");
-  }
-
-  int dhcp_status = Ethernet.maintain();
-  /*
-    returns:
-    0: nothing happened
-    1: renew failed
-    2: renew success
-    3: rebind fail
-    4: rebind success
-  */
-  if (dhcp_status) {
-    long now = millis();
-    Serial.println("DHCP Lease");
   }
 }
