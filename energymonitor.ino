@@ -52,9 +52,9 @@ boolean connect_mqtt() {
 
 void setup() {
   pinMode(chan1_pin, INPUT);
-  attachInterrupt(0, chan1_isr, RISING);
+  attachInterrupt(1, chan1_isr, FALLING);
   Serial.begin(9600);
-  delay(1000);
+  delay(1000);µ
   snprintf(macstr, 18, "%02x:%02x:%02x:%02x:%02x:%02x",
     mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
   Serial.print(macstr);
