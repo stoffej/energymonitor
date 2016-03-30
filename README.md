@@ -10,6 +10,6 @@ Also requires MQTT PubSubClient library for arduino. which can be found here: ht
 kopplingslist inkommande från detektorn i skåpet
 
 orange = 5V
-oragne/vit = NC
+orange/vit = NC
 blå = pulser
 blå/vit = jord
