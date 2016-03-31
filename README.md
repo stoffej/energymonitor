@@ -13,3 +13,9 @@ orange = 5V
 orange/vit = NC
 blå = pulser
 blå/vit = jord
+
+
+den på värmepumpen
+grön = 5V
+brun = jord
+vit = pulser
